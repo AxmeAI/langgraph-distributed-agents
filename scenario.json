@@ -1,38 +1,34 @@
 {
-  "scenario": "distributed-compliance-risk-review",
-  "description": "Two LangGraph agents coordinate via AXME: compliance check -> risk assessment -> human approval",
+  "scenario_id": "langgraph-distributed.demo.v1",
+  "title": "LangGraph distributed agents - compliance check",
+  "description": "LangGraph agent checks compliance via AXME durable delivery.",
   "agents": [
     {
-      "agent_uri": "agent://compliance-checker",
-      "name": "Compliance Checker",
-      "description": "LangGraph agent that analyzes documents for regulatory compliance",
-      "capabilities": ["compliance_check"]
-    },
-    {
-      "agent_uri": "agent://risk-assessor",
-      "name": "Risk Assessor",
-      "description": "LangGraph agent that scores risk and requests human approval",
-      "capabilities": ["risk_assessment"]
+      "role": "compliance_agent",
+      "address": "langgraph-compliance-demo",
+      "display_name": "LangGraph Compliance Agent",
+      "delivery_mode": "stream",
+      "create_if_missing": true
     }
   ],
   "workflow": {
     "steps": [
       {
-        "intent_type": "compliance_check",
-        "to_agent": "agent://compliance-checker",
-        "description": "Analyze document for compliance issues"
-      },
-      {
-        "intent_type": "risk_assessment",
-        "to_agent": "agent://risk-assessor",
-        "description": "Assess risk based on compliance results",
-        "requires_human_approval": true
+        "step_id": "compliance_check",
+        "tool_id": "tool.agent.task.v1",
+        "assigned_to": "compliance_agent",
+        "step_deadline_seconds": 120
       }
     ]
   },
-  "timeouts": {
-    "compliance_check": "5m",
-    "risk_assessment": "10m",
-    "human_approval": "7d"
+  "intent": {
+    "type": "intent.compliance.distributed_check.v1",
+    "payload": {
+      "change_id": "CHG-9901",
+      "service": "payment-gateway",
+      "environment": "production",
+      "risk_level": "medium"
+    },
+    "max_delivery_attempts": 3
   }
 }
