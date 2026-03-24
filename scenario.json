@@ -1,0 +1,38 @@
+{
+  "scenario": "distributed-compliance-risk-review",
+  "description": "Two LangGraph agents coordinate via AXME: compliance check -> risk assessment -> human approval",
+  "agents": [
+    {
+      "agent_uri": "agent://compliance-checker",
+      "name": "Compliance Checker",
+      "description": "LangGraph agent that analyzes documents for regulatory compliance",
+      "capabilities": ["compliance_check"]
+    },
+    {
+      "agent_uri": "agent://risk-assessor",
+      "name": "Risk Assessor",
+      "description": "LangGraph agent that scores risk and requests human approval",
+      "capabilities": ["risk_assessment"]
+    }
+  ],
+  "workflow": {
+    "steps": [
+      {
+        "intent_type": "compliance_check",
+        "to_agent": "agent://compliance-checker",
+        "description": "Analyze document for compliance issues"
+      },
+      {
+        "intent_type": "risk_assessment",
+        "to_agent": "agent://risk-assessor",
+        "description": "Assess risk based on compliance results",
+        "requires_human_approval": true
+      }
+    ]
+  },
+  "timeouts": {
+    "compliance_check": "5m",
+    "risk_assessment": "10m",
+    "human_approval": "7d"
+  }
+}
