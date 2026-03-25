@@ -199,7 +199,7 @@ axme intents get <intent_id>
 - [AXME Python SDK](https://github.com/AxmeAI/axme-sdk-python) -- `pip install axme`
 - [AXME Documentation](https://github.com/AxmeAI/axme-docs)
 - [AXME Examples](https://github.com/AxmeAI/axme-examples) -- more patterns (delivery, durability, human-in-the-loop)
-- [AXP Intent Protocol Spec](https://github.com/AxmeAI/axp-spec)
+- [AXP Intent Protocol Spec](https://github.com/AxmeAI/axme-spec)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 
 ---
